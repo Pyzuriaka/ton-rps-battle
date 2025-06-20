@@ -9,7 +9,90 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      [_ in never]: never
+      games: {
+        Row: {
+          bet_amount: number
+          contract_address: string | null
+          created_at: string
+          creator_address: string
+          creator_choice: string | null
+          creator_choice_hash: string | null
+          expires_at: string | null
+          game_status: string
+          id: string
+          joiner_address: string | null
+          joiner_choice: string | null
+          joiner_choice_hash: string | null
+          prize_amount: number | null
+          updated_at: string
+          winner_address: string | null
+        }
+        Insert: {
+          bet_amount: number
+          contract_address?: string | null
+          created_at?: string
+          creator_address: string
+          creator_choice?: string | null
+          creator_choice_hash?: string | null
+          expires_at?: string | null
+          game_status?: string
+          id?: string
+          joiner_address?: string | null
+          joiner_choice?: string | null
+          joiner_choice_hash?: string | null
+          prize_amount?: number | null
+          updated_at?: string
+          winner_address?: string | null
+        }
+        Update: {
+          bet_amount?: number
+          contract_address?: string | null
+          created_at?: string
+          creator_address?: string
+          creator_choice?: string | null
+          creator_choice_hash?: string | null
+          expires_at?: string | null
+          game_status?: string
+          id?: string
+          joiner_address?: string | null
+          joiner_choice?: string | null
+          joiner_choice_hash?: string | null
+          prize_amount?: number | null
+          updated_at?: string
+          winner_address?: string | null
+        }
+        Relationships: []
+      }
+      players: {
+        Row: {
+          created_at: string
+          games_played: number | null
+          games_won: number | null
+          id: string
+          total_winnings: number | null
+          updated_at: string
+          wallet_address: string
+        }
+        Insert: {
+          created_at?: string
+          games_played?: number | null
+          games_won?: number | null
+          id?: string
+          total_winnings?: number | null
+          updated_at?: string
+          wallet_address: string
+        }
+        Update: {
+          created_at?: string
+          games_played?: number | null
+          games_won?: number | null
+          id?: string
+          total_winnings?: number | null
+          updated_at?: string
+          wallet_address?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
