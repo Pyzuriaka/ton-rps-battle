@@ -7,7 +7,7 @@ interface TonProviderProps {
   children: ReactNode;
 }
 
-const manifestUrl = 'https://ton-connect.github.io/demo-dapp-with-react-ui/tonconnect-manifest.json';
+const manifestUrl = `${window.location.origin}/tonconnect-manifest.json`;
 
 export const TonProvider = ({ children }: TonProviderProps) => {
   return (

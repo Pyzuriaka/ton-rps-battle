@@ -1,5 +1,5 @@
 
-import { Wallet, ArrowLeft, RefreshCw } from 'lucide-react';
+import { Wallet, ArrowLeft, RefreshCw, Wifi } from 'lucide-react';
 import { useTonWalletConnection } from '@/hooks/useTonWallet';
 
 interface GameHeaderProps {
@@ -14,6 +14,7 @@ const GameHeader = ({ title, showBack, onBack, showWallet }: GameHeaderProps) =>
     isConnected, 
     address, 
     balance, 
+    network,
     connectWallet, 
     disconnectWallet, 
     isLoading, 
@@ -42,6 +43,12 @@ const GameHeader = ({ title, showBack, onBack, showWallet }: GameHeaderProps) =>
       
       {showWallet && (
         <div className="flex items-center gap-2">
+          {/* Network indicator */}
+          <div className="flex items-center gap-1 px-2 py-1 rounded text-xs font-medium bg-slate-100 text-slate-600">
+            <Wifi size={12} />
+            <span>{network === 'testnet' ? 'Testnet' : 'Mainnet'}</span>
+          </div>
+          
           {isConnected ? (
             <div className="flex items-center gap-2">
               <div className="text-right">
