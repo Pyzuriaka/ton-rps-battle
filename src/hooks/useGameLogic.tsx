@@ -2,24 +2,15 @@
 import { useState, useCallback } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useTonWalletConnection } from './useTonWallet';
+import type { Tables } from '@/integrations/supabase/types';
 
 type GameChoice = 'rock' | 'paper' | 'scissors';
 type GameStatus = 'waiting' | 'active' | 'revealing' | 'completed' | 'cancelled';
 
-interface Game {
-  id: string;
-  creator_address: string;
-  joiner_address?: string;
-  bet_amount: number;
+// Use the Supabase generated type but with our specific GameStatus
+type Game = Omit<Tables<'games'>, 'game_status'> & {
   game_status: GameStatus;
-  creator_choice?: string;
-  joiner_choice?: string;
-  winner_address?: string;
-  prize_amount?: number;
-  contract_address?: string;
-  created_at: string;
-  expires_at?: string;
-}
+};
 
 export const useGameLogic = () => {
   const { address, isConnected } = useTonWalletConnection();
@@ -55,8 +46,9 @@ export const useGameLogic = () => {
           onConflict: 'wallet_address'
         });
 
-      setCurrentGame(data);
-      return data;
+      // Cast the data to our Game type
+      setCurrentGame(data as Game);
+      return data as Game;
     } catch (error) {
       console.error('Failed to create game:', error);
       throw error;
@@ -95,8 +87,9 @@ export const useGameLogic = () => {
           onConflict: 'wallet_address'
         });
 
-      setCurrentGame(data);
-      return data;
+      // Cast the data to our Game type
+      setCurrentGame(data as Game);
+      return data as Game;
     } catch (error) {
       console.error('Failed to join game:', error);
       throw error;
@@ -131,8 +124,9 @@ export const useGameLogic = () => {
 
       if (error) throw error;
 
-      setCurrentGame(data);
-      return data;
+      // Cast the data to our Game type
+      setCurrentGame(data as Game);
+      return data as Game;
     } catch (error) {
       console.error('Failed to submit choice:', error);
       throw error;
