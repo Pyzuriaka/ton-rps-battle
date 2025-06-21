@@ -1,4 +1,5 @@
 
+import React from 'react';
 import { TonConnectUIProvider } from '@tonconnect/ui-react';
 import { ReactNode } from 'react';
 
