@@ -1,5 +1,5 @@
 
-import { Wallet, ArrowLeft } from 'lucide-react';
+import { Wallet, ArrowLeft, RefreshCw } from 'lucide-react';
 import { useTonWalletConnection } from '@/hooks/useTonWallet';
 
 interface GameHeaderProps {
@@ -10,7 +10,17 @@ interface GameHeaderProps {
 }
 
 const GameHeader = ({ title, showBack, onBack, showWallet }: GameHeaderProps) => {
-  const { isConnected, address, balance, connectWallet, disconnectWallet, isLoading } = useTonWalletConnection();
+  const { 
+    isConnected, 
+    address, 
+    balance, 
+    connectWallet, 
+    disconnectWallet, 
+    isLoading, 
+    isBalanceLoading,
+    balanceError,
+    getBalance 
+  } = useTonWalletConnection();
 
   const formatAddress = (addr: string) => {
     return `${addr.slice(0, 4)}...${addr.slice(-4)}`;
@@ -36,7 +46,23 @@ const GameHeader = ({ title, showBack, onBack, showWallet }: GameHeaderProps) =>
             <div className="flex items-center gap-2">
               <div className="text-right">
                 <div className="text-xs text-slate-500">{formatAddress(address || '')}</div>
-                <div className="text-xs font-medium text-slate-700">{balance} TON</div>
+                <div className="flex items-center gap-1">
+                  {isBalanceLoading ? (
+                    <div className="text-xs text-slate-500">Loading...</div>
+                  ) : balanceError ? (
+                    <div className="text-xs text-red-500">Error</div>
+                  ) : (
+                    <div className="text-xs font-medium text-slate-700">{balance} TON</div>
+                  )}
+                  <button
+                    onClick={getBalance}
+                    disabled={isBalanceLoading}
+                    className="p-1 hover:bg-slate-100 rounded transition-colors disabled:opacity-50"
+                    title="Refresh balance"
+                  >
+                    <RefreshCw size={12} className={`text-slate-500 ${isBalanceLoading ? 'animate-spin' : ''}`} />
+                  </button>
+                </div>
               </div>
               <button 
                 onClick={disconnectWallet}
